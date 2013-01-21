@@ -1,0 +1,29 @@
+import os
+import re
+import os.path
+rootdir=r"C:\Users\v-kahu\Desktop\google-python-exercises\google-python-exercises\babynames"
+numberfile=[""]
+underdir=[""]
+for filenames in os.walk(rootdir):
+    p=re.compile(r"baby(\d\d\d\d)")
+    numberfile.append(p.findall(str(filenames)))
+print numberfile[1]
+FileWithNumber=numberfile[1]
+print FileWithNumber
+print int(FileWithNumber[1])
+for i in range(0,9):
+  	wholeUrl=os.path.join(rootdir, 'baby'+FileWithNumber[i]+'.'+'html')
+		print wholeUrl
+		f=open(wholeUrl,'r')
+		dic={"":""}
+		a=re.compile(r'<tr align="right">(<td>(.*)</td>)(<td>(.*)</td>)(<td>(.*)</td>)')
+		emails=a.findall(f.read())
+	
+		for i in range(1,len(emails)):
+		   dic.update({emails[i][1]:emails[i][3]})
+		   dic.update({emails[i][1]:emails[i][5]})
+		   print emails[i][1],emails[i][3],emails[i][5]   
+		   f.close()
+	
+		for key in sorted(dic.iterkeys()):
+		   print "%s: %s" % (key, dic[key])
