@@ -1,0 +1,29 @@
+import re
+import os
+import urllib
+f=open("animal_code.google.com")
+str=f.read()
+p=re.compile(r'GET (.*/puzzle/.*) HTTP/1.0') 
+result=p.findall(str)
+urllist=[]
+jpglist=[]
+setOne=()
+setTwo=()
+for i in range(0,len(result)-1):
+  wholeURL='http://code.google.com'+result[i]
+  a=re.compile(r'puzzle/(.*.jpg)')
+  jpg=a.search(wholeURL).group(1)
+  urllist.append(wholeURL)
+  jpglist.append(jpg)
+
+urllist.sort()
+jpglist.sort()
+setOne = list(set(urllist))
+setTwo = list(set(jpglist))
+setOne.sort()
+setTwo.sort()
+print setOne
+print setTwo 
+
+for i in range(0,len(setOne)-1):
+  urllib.urlretrieve(setOne[i],setTwo[i]) 
